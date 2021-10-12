@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Carousel-Slider</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="carousel">
+        <img src="1.jpg" alt="" class="first" />
+        <img src="2.jpg" alt="" />
+        <img src="3.jpg" alt="" />
+        <img src="4.jpg" alt="" />
+      </div>
+
+      <div class="navigation">
+        <div class="navigation-btn active"></div>
+        <div class="navigation-btn"></div>
+        <div class="navigation-btn"></div>
+        <div class="navigation-btn"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const carousel = document.querySelector(".carousel .first");
+    const btns = document.querySelectorAll(".navigation-btn");
+
+    let cur = 0;
+    let key = null;
+
+    const moveSlider = (idx) => {
+      btns[cur].classList.remove("active");
+      cur = idx;
+      btns[idx].classList.add("active");
+
+      const movement = -25 * idx;
+      carousel.style.marginLeft = movement + "%";
+      carousel.style.transition = "2s";
+    };
+
+    btns.forEach((btn, idx) => {
+      btn.addEventListener("click", () => {
+        clearInterval(key);
+        moveSlider(idx);
+        key = setInterval(() => {
+          idx = (cur + 1) % btns.length;
+          moveSlider(idx);
+        }, 3000);
+      });
+    });
+
+    key = setInterval(() => {
+      idx = (cur + 1) % btns.length;
+      moveSlider(idx);
+    }, 3000);
+  </script>
+</html>
